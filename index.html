@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebrate</title>
+    <title>Matrix Effect</title>
     <style>
-        body{
-            /* background-color: black; */
-            color: white;
+        body {
+            margin: 0;
+            overflow: hidden;
+             /* background-color: black; */
+             color: white;
             font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background-image: url(minion.jpg);
             background-repeat: no-repeat;
-            background-size:cover; 
+            /* background-size:cover;  */
+            background-position:center;
             height: 700px;
             justify-content: center;
             text-align: center;
             align-items: center;
+        }
+        canvas {
+            display: block;
         }
         button{
             border: none;
@@ -27,62 +33,96 @@
         }
         h1{
             line-height: 40px;
-            font-size:22px;
+            font-size: 22px;
         }
-
+        .h2{
+            margin-top: 5rem;
+        }
     </style>
 </head>
 <body>
+    <h2 class="h2">Please CLick the button and see the magic</h2>
+    <button id="btn" >Celebrate</button>
+    <canvas id="matrix"></canvas>
     <div id="hack">
-        <h2 class="h2">Please CLick the button and see the magic</h2>
-        <button id="start" onclick="start()">Celebrate</button>
         <h1 class="h1"></h1>
+        
     </div>
-<!-- Javavcriprt -->
-<script>
-    // async function start() {
-    //     document.getElementsByClassName('start')[0].style.display='none' 
-    //     const hacking=await document.getElementsByClassName('h1')[0]
-    //     hacking.innerHTML='Hacking Your Device'
+    <script>
+        function strt() {
+            document.getElementsByClassName('h2')[0].style.display='none'
+            document.getElementById('btn').style.display = 'none';
+            document.body.style.background='black'
+            document.body.style.color='green'
+
+        const canvas = document.getElementById("matrix");
+        const ctx = canvas.getContext("2d");
         
-    //     await new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             hacking.innerHTML='Fetching your detail'
-    //         }, 2000);
-    //     }).then((value)=>{
-    //         setTimeout(() => {
-    //            value.console.log('user name found ("Sumit Sharma")')
-    //         }, 3000);
-    //     })
+        // Set canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const columns = Math.floor(canvas.width / 20); // Number of columns
+        const drops = Array(columns).fill(0); // Initial drop positions
+
+        // Random characters
+        const characters = "アカサタナハマヤラワABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()~`:/?><,.+-/\|0123456789";
+
+        function drawMatrix() {
+            // Clear the canvas with a translucent black
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Set text style
+            ctx.fillStyle = "#0F0"; // Green text
+            ctx.font = "20px monospace";
+
+            // Draw characters
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(text, i * 20, drops[i] * 20);
+
+                // Reset drop if it goes off-screen
+                if (drops[i] * 20 > canvas.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        // Loop the animation
+        const intervalId= setInterval(drawMatrix, 50);
+        setTimeout(() => {
+            clearInterval(intervalId);
+            canvas.style.display='none'
+        }, 5000);
         
-    // }
+        // Adjust canvas size on window resize
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
 
-//     async function start() {
-//     const hacking = document.getElementsByClassName('h1')[0];
-//     hacking.innerHTML = 'Hacking Your Device';
 
-//     await new Promise(resolve => setTimeout(resolve, 2000)); 
-//     hacking.innerHTML = 'Process Completed';
-//     document.getElementsByClassName('start')[0].style.display = 'none';
-// }
 
-   
-async function start() {     
-    document.getElementsByClassName('h2')[0].style.display='none'
-    document.getElementById('start').style.display = 'none';
+
+        setTimeout(() => {
+            async function start() {     
+
     document.body.style.background='black'
     const lines = [
     "Initializing hack...",
     "Accessing secure server...",
     "Bypassing firewalls...",
     "Extracting data...",
-    "User Name Found ('Mr.Sumit Sharma')",
+    "User Name Found('Mr.Sumit Sharma')",
     "Fetching Phonepe Details...",
     "Accessing Data From Phonepe...",
-    "Phone Lock Found ('1976')",
-    "Phonepe Pin Found ('258011')",
+    "Phone Lock Founded ('1976')",
+    "Phonepe Pin Founded ('258011')",
     "Hacking complete!"
-];
+    ];
     const hacking = document.getElementsByClassName('h1')[0];
     hacking.innerHTML = ' ';
     hacking.style.color='green'
@@ -90,43 +130,20 @@ async function start() {
     for(let line of lines){
         hacking.innerHTML+=line + '<br>'
         await new Promise(resolve => setTimeout(resolve, 2000)); 
-        }
+    }
+}       
         
 
-
+start()
+        document.body.style.display='block'
+    }, 5100,);
+    
 }
 
+        document.getElementById('btn').addEventListener('click',()=>{
+            strt()
+        })
 
-
-// Function to display lines dynamically
-// async function displayLines() {
-//   const lines = [
-//     "Initializing hack...",
-//     "Accessing secure server...",
-//     "Bypassing firewalls...",
-//     "Extracting data...",
-//     "Hacking complete!"
-//   ];
-
-//   const outputDiv = document.getElementsByClassName('h1')[0];
-//   outputDiv.innerHTML = ''; // Clear previous content if any
-
-//   for (let line of lines) {
-//     // Add each line to the div
-//     outputDiv.innerHTML += line + '\n';
-
-//     // Wait for 1 second before showing the next line
-//     await new Promise(resolve => setTimeout(resolve, 1000));
-//   }
-
-  // Optional: Disable the button after finishing
-//   document.getElementById('start').disabled = true;
-// }
-// 
-// Attach the function to the button
-// document.getElementById('start').addEventListener('click', displayLines);
-
-</script>
-<!-- Javavcriprt -->
+    </script>
 </body>
 </html>
